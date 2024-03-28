@@ -55,7 +55,7 @@ namespace tomograf
                         {
                             if (y2[k] >= (1 - j * (2.0 / n_lasers)) && (1 - j * (2.0 / n_lasers)) >= y1[k])
                             {
-                                Console.WriteLine("wejscie: "+i+" wyjscie: "+j +" dlugosc promienia: "+(x2[k] - x1[k])+ " strata energii: " +materials[k]*(x2[k] - x1[k]));
+                                Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + (x2[k] - x1[k]) + " strata energii: " + materials[k] * (x2[k] - x1[k]));
                             }
                         }
 
@@ -75,7 +75,7 @@ namespace tomograf
                             {
                                 //sprawdzanie czy promien wchodzi od gory
                                 double x_check = (y2[k] - b) / a;
-                               // Console.WriteLine(x_check);
+                                // Console.WriteLine(x_check);
                                 if (x_check >= x1[k] && x_check <= x2[k])
                                 {
                                     entry_x = x_check;
@@ -109,63 +109,64 @@ namespace tomograf
                                 double distance = Math.Sqrt(Math.Pow((exit_x - entry_x), 2) + Math.Pow((exit_y - entry_y), 2));
                                 Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + distance + " strata energii: " + materials[k] * (distance));
                             }
+                        }
 
-                            else if (i < j)
+                        else if (i < j)
+                        {
+                            //sprawdzanie czy promien "wchodzi" od lewej sciany
+                            double y_check = a * x1[k] + b;
+                            double entry_x = 1;
+                            double entry_y = 1;
+                            if (y_check >= y1[k] && y_check <= y2[k])
                             {
-                                //sprawdzanie czy promien "wchodzi" od lewej sciany
-                                y_check = a * x1[k] + b;
-                                entry_x = 1;
-                                entry_y = 1;
+                                entry_x = x1[k];
+                                entry_y = y_check;
+                            }
+
+                            else
+                            {
+                                //sprawdzanie czy promien wchodzi od dolu
+                                double x_check = (y1[k] - b) / a;
+                                if (x_check >= x1[k] && x_check <= x2[k])
+                                {
+                                    entry_x = x_check;
+                                    entry_y = y1[k];
+                                }
+                            }
+
+                            if (entry_x != 1 || entry_y != 1)
+                            {
+                                //sprawdzanie czy promien wychodzi od prawej sciany
+                                y_check = a * x2[k] + b;
+                                double exit_x = 0;
+                                double exit_y = 0;
                                 if (y_check >= y1[k] && y_check <= y2[k])
                                 {
-                                    entry_x = x1[k];
-                                    entry_y = y_check;
+                                    exit_x = x2[k];
+                                    exit_y = y_check;
                                 }
 
                                 else
                                 {
-                                    //sprawdzanie czy promien wchodzi od dolu
-                                    double x_check = (y1[k] - b) / a;
+                                    //sprawdzanie czy promien wychodzi od gory
+                                    double x_check = (y2[k] - b) / a;
                                     if (x_check >= x1[k] && x_check <= x2[k])
                                     {
-                                        entry_x = x_check;
-                                        entry_y = y1[k];
+                                        exit_x = x_check;
+                                        exit_y = x1[k];
                                     }
                                 }
 
-                                if (entry_x != 1 || entry_y != 1)
-                                {
-                                    //sprawdzanie czy promien wychodzi od prawej sciany
-                                    y_check = a * x2[k] + b;
-                                    double exit_x = 0;
-                                    double exit_y = 0;
-                                    if (y_check >= y1[k] && y_check <= y2[k])
-                                    {
-                                        exit_x = x2[k];
-                                        exit_y = y_check;
-                                    }
-
-                                    else
-                                    {
-                                        //sprawdzanie czy promien wychodzi od gory
-                                        double x_check = (y2[k] - b) / a;
-                                        if (x_check >= x1[k] && x_check <= x2[k])
-                                        {
-                                            exit_x = x_check;
-                                            exit_y = x1[k];
-                                        }
-                                    }
-
-                                    double distance = Math.Sqrt(Math.Pow((exit_x - entry_x), 2) + Math.Pow((exit_y - entry_y), 2));
-                                    Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + distance + " strata energii: " + materials[k] * (distance));
-
-                                }
+                                double distance = Math.Sqrt(Math.Pow((exit_x - entry_x), 2) + Math.Pow((exit_y - entry_y), 2));
+                                Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + distance + " strata energii: " + materials[k] * (distance));
 
                             }
+
+                        }
                         }
                     }
                 }
             }
         }
     }
-}
+
