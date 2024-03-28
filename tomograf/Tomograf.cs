@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//nie jestem jeszcze pewny co ma zwracac ta funkcja, na razie zrobilem wyswietlanie w konsoli dlugosci promienia "wewnatrz" prostakatu i jaki jest spadek energii
+
+
 namespace tomograf
 {
     internal class Tomograf
@@ -36,6 +39,8 @@ namespace tomograf
         {
             for (int k = 0; k < n_squares; k++)
             {
+                Console.WriteLine('\n');
+                Console.WriteLine("Kwadrat: " + k);
                 for (int i = 0; i < n_lasers; i++)
                 {
                     for (int j = 0; j < n_lasers; j++)
@@ -50,7 +55,7 @@ namespace tomograf
                         {
                             if (y2[k] >= (1 - j * (2.0 / n_lasers)) && (1 - j * (2.0 / n_lasers)) >= y1[k])
                             {
-                                Console.WriteLine("Kwadrat " + k + " długość: " + (x2[k] - x1[k]));
+                                Console.WriteLine("wejscie: "+i+" wyjscie: "+j +" dlugosc promienia: "+(x2[k] - x1[k])+ " strata energii: " +materials[k]*(x2[k] - x1[k]));
                             }
                         }
 
@@ -102,7 +107,7 @@ namespace tomograf
                                 }
 
                                 double distance = Math.Sqrt(Math.Pow((exit_x - entry_x), 2) + Math.Pow((exit_y - entry_y), 2));
-                                Console.WriteLine("Kwadrat " + k + " długość: " + distance);
+                                Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + distance + " strata energii: " + materials[k] * (distance));
                             }
 
                             else if (i < j)
@@ -152,7 +157,7 @@ namespace tomograf
                                     }
 
                                     double distance = Math.Sqrt(Math.Pow((exit_x - entry_x), 2) + Math.Pow((exit_y - entry_y), 2));
-                                    Console.WriteLine("Kwadrat " + k + " długość: " + distance);
+                                    Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + distance + " strata energii: " + materials[k] * (distance));
 
                                 }
 
