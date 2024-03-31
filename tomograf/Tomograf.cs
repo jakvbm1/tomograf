@@ -35,8 +35,18 @@ namespace tomograf
             return y - a * x;
         }
 
-        public void Run()
+        public double[][] Run()
         {
+            double[][] energy_loss = new double[n_lasers][];
+            for (int i = 0; i < n_lasers; i++)
+            {
+                energy_loss[i] = new double[n_lasers];
+                for (int j = 0; j < n_lasers; j++)
+                {
+                    energy_loss[i][j] = 0;
+                }
+            }
+
             for (int k = 0; k < n_squares; k++)
             {
                 Console.WriteLine('\n');
@@ -56,6 +66,7 @@ namespace tomograf
                             if (y2[k] >= (1 - j * (2.0 / n_lasers)) && (1 - j * (2.0 / n_lasers)) >= y1[k])
                             {
                                 Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + (x2[k] - x1[k]) + " strata energii: " + materials[k] * (x2[k] - x1[k]));
+                                energy_loss[i][j] += materials[k] * (x2[k] - x1[k]);
                             }
                         }
 
@@ -108,6 +119,7 @@ namespace tomograf
 
                                 double distance = Math.Sqrt(Math.Pow((exit_x - entry_x), 2) + Math.Pow((exit_y - entry_y), 2));
                                 Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + distance + " strata energii: " + materials[k] * (distance));
+                                energy_loss[i][j] += materials[k] * distance;
                             }
                         }
 
@@ -159,6 +171,7 @@ namespace tomograf
 
                                 double distance = Math.Sqrt(Math.Pow((exit_x - entry_x), 2) + Math.Pow((exit_y - entry_y), 2));
                                 Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + distance + " strata energii: " + materials[k] * (distance));
+                                energy_loss[i][j] += materials[k] * distance;
 
                             }
 
@@ -166,7 +179,9 @@ namespace tomograf
                         }
                     }
                 }
-            }
+
+            return energy_loss;
+        }
         }
     }
 

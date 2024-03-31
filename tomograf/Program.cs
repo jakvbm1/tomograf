@@ -12,6 +12,14 @@ internal class Program
         double[] material = {3, 2, 1};
         Tomograf tomograf = new Tomograf(5, 3, x1, y1, x2, y2, material);
 
-        tomograf.Run();
+        double[][] wyniki = tomograf.Run();
+        foreach (double[] x in wyniki) 
+        {
+            foreach (double y in x) 
+            {
+                Console.Write(y+" ");
+            }
+            Console.WriteLine();
+        }
 }
 }
