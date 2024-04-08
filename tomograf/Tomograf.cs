@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//nie jestem jeszcze pewny co ma zwracac ta funkcja, na razie zrobilem wyswietlanie w konsoli dlugosci promienia "wewnatrz" prostakatu i jaki jest spadek energii
+//na ten moment program nie będzie działał dla jednego lasera (dojdzie do dzielenia przez 0), na dniach dorobię obsługe jednego lasera
 
 
 namespace tomograf
@@ -56,14 +56,14 @@ namespace tomograf
                     for (int j = 0; j < n_lasers; j++)
                     {
 
-                        double a = ((1 - j * (2.0 / n_lasers)) - (1 - i * (2.0 / n_lasers))) / 2;
-                        double b = calc_b(a, 1, 1 - j * (2.0 / n_lasers));
+                        double a = ((1 - j * (2.0 / (n_lasers-1))) - (1 - i * (2.0 / (n_lasers - 1)))) / 2;
+                        double b = calc_b(a, 1, 1 - j * (2.0 / (n_lasers - 1)));
 
                         //Console.WriteLine(a + "x" + " + " + b);
 
                         if (i == j)
                         {
-                            if (y2[k] >= (1 - j * (2.0 / n_lasers)) && (1 - j * (2.0 / n_lasers)) >= y1[k])
+                            if (y2[k] >= (1 - j * (2.0 / (n_lasers - 1))) && (1 - j * (2.0 / (n_lasers - 1))) >= y1[k])
                             {
                                 Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + (x2[k] - x1[k]) + " strata energii: " + materials[k] * (x2[k] - x1[k]));
                                 energy_loss[i][j] += materials[k] * (x2[k] - x1[k]);
