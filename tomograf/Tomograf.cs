@@ -59,8 +59,8 @@ namespace tomograf
                         double a = ((1 - j * (2.0 / (n_lasers-1))) - (1 - i * (2.0 / (n_lasers - 1)))) / 2;
                         double b = calc_b(a, 1, 1 - j * (2.0 / (n_lasers - 1)));
 
-                        Console.WriteLine((i + 1) + "->" + (j + 1));
-                        Console.WriteLine(a + "x" + " + " + b);
+                        //Console.WriteLine((i + 1) + "->" + (j + 1));
+                        //Console.WriteLine(a + "x" + " + " + b);
 
                         if (i == j)
                         {
@@ -79,7 +79,6 @@ namespace tomograf
                             double entry_y = 1;
                             if (y_check >= y1[k] && y_check <= y2[k])
                             {
-                                Console.WriteLine("wszedl od lewej");
                                 entry_x = x1[k];
                                 entry_y = y_check;
                             }
@@ -93,7 +92,6 @@ namespace tomograf
                                 {
                                     entry_x = x_check;
                                     entry_y = y2[k];
-                                    Console.WriteLine("wszedl od gory");
                                 }
                             }
                             //Console.WriteLine(entry_x + " " + entry_y);
