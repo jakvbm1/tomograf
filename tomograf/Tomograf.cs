@@ -67,7 +67,7 @@ namespace tomograf
                             if (y2[k] >= (1 - j * (2.0 / (n_lasers - 1))) && (1 - j * (2.0 / (n_lasers - 1))) >= y1[k])
                             {
                                 //Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + (x2[k] - x1[k]) + " strata energii: " + materials[k] * (x2[k] - x1[k]));
-                                energy_loss[i][j] += materials[k] * (x2[k] - x1[k]);
+                                energy_loss[j][i] += materials[k] * (x2[k] - x1[k]);
                             }
                         }
 
@@ -114,13 +114,13 @@ namespace tomograf
                                     if (x_check >= x1[k] && x_check <= x2[k])
                                     {
                                         exit_x = x_check;
-                                        exit_y = x1[k];
+                                        exit_y = y1[k];
                                     }
                                 }
 
                                 double distance = Math.Sqrt(Math.Pow((exit_x - entry_x), 2) + Math.Pow((exit_y - entry_y), 2));
                                 //Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + distance + " strata energii: " + materials[k] * (distance));
-                                energy_loss[i][j] += materials[k] * distance;
+                                energy_loss[j][i] += materials[k] * distance;
                             }
                         }
 
@@ -134,6 +134,12 @@ namespace tomograf
                             {
                                 entry_x = x1[k];
                                 entry_y = y_check;
+
+                                //if (i == 3 && j == 0)
+                                //{
+
+                                    //Console.WriteLine(entry_x + ", " + entry_y);
+                                //}
                             }
 
                             else
@@ -157,6 +163,8 @@ namespace tomograf
                                 {
                                     exit_x = x2[k];
                                     exit_y = y_check;
+
+
                                 }
 
                                 else
@@ -166,13 +174,18 @@ namespace tomograf
                                     if (x_check >= x1[k] && x_check <= x2[k])
                                     {
                                         exit_x = x_check;
-                                        exit_y = x1[k];
+                                        exit_y = y2[k];
+
+                                        //if (i == 3 && j == 0)
+                                        //{
+
+                                            //Console.WriteLine(exit_x + ", " + exit_y);
+                                        //}
                                     }
                                 }
-
                                 double distance = Math.Sqrt(Math.Pow((exit_x - entry_x), 2) + Math.Pow((exit_y - entry_y), 2));
                                 //Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + distance + " strata energii: " + materials[k] * (distance));
-                                energy_loss[i][j] += materials[k] * distance;
+                                energy_loss[j][i] += materials[k] * distance;
 
                             }
 
