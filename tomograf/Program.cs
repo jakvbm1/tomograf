@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using tomograf;
 
+namespace tomograf
+{ 
 internal class Program
 {
     private static void Main(string[] args)
@@ -18,7 +20,7 @@ internal class Program
         double[] x2 = { 0.6};
         double[] y2 = { 0.4};
         double[] material = {1};
-        Tomograf tomograf = new Tomograf(5, 1, x1, y1, x2, y2, material);
+            Square_Tomograph tomograf = new Square_Tomograph(5, 1, x1, y1, x2, y2, material);
 
         double[][] wyniki = tomograf.Run();
         foreach (double[] x in wyniki) 
@@ -29,5 +31,6 @@ internal class Program
             }
             Console.WriteLine();
         }
+}
 }
 }
