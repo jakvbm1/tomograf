@@ -23,14 +23,29 @@ internal class Program
             Square_Tomograph tomograf = new Square_Tomograph(5, 1, x1, y1, x2, y2, material);
 
         double[][] wyniki = tomograf.Run();
-        foreach (double[] x in wyniki) 
+        foreach (double[] xx in wyniki) 
         {
-            foreach (double y in x) 
+            foreach (double yy in xx) 
             {
-                Console.Write(y+" ");
+                //Console.Write(yy+" ");
             }
-            Console.WriteLine();
+            //Console.WriteLine();
         }
+
+            double[] x = { 0.4, -0.3, 0 };
+            double[] y = { -0.6, 0.4, 0 };
+            double[] r = { 0.3, 0.1, 0.5 };
+
+            Circle_tomograph ct = new Circle_tomograph(x, y, r, 5);
+            double[][] circle_res = ct.Run();
+            foreach(var i  in circle_res)
+            {
+                foreach(var j in i)
+                {
+                    Console.Write(j+" ");
+                }
+                Console.WriteLine();
+            }
 }
 }
 }
