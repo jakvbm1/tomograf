@@ -50,7 +50,7 @@ namespace tomograf
 
                         if (d < radius[k]) //jesli odleglosc jest mniejsza niz promien, to promien przecina kolo
                         {
-                            vector[i][j] += 2 * Math.Sqrt(Math.Pow(radius[k], 2) - Math.Pow(d, 2));
+                            vector[j][i] += 2 * Math.Sqrt(Math.Pow(radius[k], 2) - Math.Pow(d, 2));
                         }
                     }
                 }

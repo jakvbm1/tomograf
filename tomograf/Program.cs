@@ -27,14 +27,14 @@ internal class Program
         {
             foreach (double yy in xx) 
             {
-                //Console.Write(yy+" ");
+                Console.Write(yy+" ");
             }
-            //Console.WriteLine();
+            Console.WriteLine();
         }
-
-            double[] x = { 0.4, -0.3, 0 };
-            double[] y = { -0.6, 0.4, 0 };
-            double[] r = { 0.3, 0.1, 0.5 };
+            Console.WriteLine(" ");
+            double[] x = { 0.1};
+            double[] y = { -0.1};
+            double[] r = { 0.5};
 
             Circle_tomograph ct = new Circle_tomograph(x, y, r, 5);
             double[][] circle_res = ct.Run();
