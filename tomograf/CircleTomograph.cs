@@ -8,16 +8,17 @@ namespace tomograf
 {
     internal class Circle_tomograph : ITomograph
     {
-        private double[] x, y, radius;
+        private double[] x, y, radius, materials;
         private int n_circles, n_lasers;
 
-        public Circle_tomograph(double[] x, double[] y, double[] radius,  int n_lasers)
+        public Circle_tomograph(double[] x, double[] y, double[] radius,  int n_lasers, double[] materials)
         {
             this.n_circles = x.Length;
             this.x = x;
             this.y = y;
             this.radius = radius;
             this.n_lasers = n_lasers;
+            this.materials = materials;
         }
 
         private double calc_b(double a, double x, double y)
@@ -50,7 +51,7 @@ namespace tomograf
 
                         if (d < radius[k]) //jesli odleglosc jest mniejsza niz promien, to promien przecina kolo
                         {
-                            vector[j][i] += 2 * Math.Sqrt(Math.Pow(radius[k], 2) - Math.Pow(d, 2));
+                            vector[j][i] += 2 * Math.Sqrt(Math.Pow(radius[k], 2) - Math.Pow(d, 2)) * materials[k];
                         }
                     }
                 }

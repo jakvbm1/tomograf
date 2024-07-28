@@ -36,7 +36,7 @@ internal class Program
             double[] y = { -0.1};
             double[] r = { 0.5};
 
-            Circle_tomograph ct = new Circle_tomograph(x, y, r, 5);
+            Circle_tomograph ct = new Circle_tomograph(x, y, r, 5, material);
             double[][] circle_res = ct.Run();
             foreach(var i  in circle_res)
             {
