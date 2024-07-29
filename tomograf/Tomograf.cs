@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace tomograf
 {
-    class Square_Tomograph: ITomograph
+    class Rect_Tomograph: ITomograph
     {
         private int n_lasers;
         private int n_squares;
@@ -19,7 +19,7 @@ namespace tomograf
         private double[] y2;
         private double[] materials;
 
-        public Square_Tomograph(int n_lasers, int n_squares, double[] x1, double[] y1, double[] x2, double[] y2, double[] materials)
+        public Rect_Tomograph(int n_lasers, int n_squares, double[] x1, double[] y1, double[] x2, double[] y2, double[] materials)
         {
             this.n_lasers = n_lasers;
             this.n_squares = n_squares;

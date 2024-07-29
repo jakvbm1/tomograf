@@ -59,5 +59,33 @@ namespace tomograf
 
             return vector;
         }
+
+        public void save_to_txt(double[][] results)
+        {
+            string filename = "results.txt";
+            using (StreamWriter writer = new StreamWriter(filename))
+            {
+                writer.WriteLine("Ilość laserów: " + n_lasers);
+                writer.WriteLine("Ilość kół: " + n_circles);
+                for (int i = 0; i < n_circles; i++)
+                {
+                    writer.WriteLine("koło numer " + (i + 1) + ": ");
+                    writer.Write("(" + x[i] + ", " + y[i] + "), ");
+                    writer.Write($"Promień{radius[i]}, ");
+                    writer.Write("materiał: " + materials[i] + '\n');
+                }
+                writer.WriteLine("Straty energii:");
+                foreach (double[] line in results)
+                {
+                    foreach (double y in line)
+                    {
+                        writer.Write(y + " ");
+                    }
+                    writer.WriteLine();
+                }
+                writer.Close();
+            }
+            Console.WriteLine("Wyniki zapisano do: " + filename);
+        }
     }
 }

@@ -20,7 +20,7 @@ internal class Program
         double[] x2 = { 0.6};
         double[] y2 = { 0.4};
         double[] material = {1};
-            Square_Tomograph tomograf = new Square_Tomograph(5, 1, x1, y1, x2, y2, material);
+            Rect_Tomograph tomograf = new Rect_Tomograph(5, 1, x1, y1, x2, y2, material);
 
         double[][] wyniki = tomograf.Run();
         foreach (double[] xx in wyniki) 
