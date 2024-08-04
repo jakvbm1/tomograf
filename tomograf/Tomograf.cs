@@ -12,17 +12,17 @@ namespace tomograf
     class Rect_Tomograph: ITomograph
     {
         private int n_lasers;
-        private int n_squares;
+        private int n_rectangles;
         private double[] x1;
         private double[] y1;
         private double[] x2;
         private double[] y2;
         private double[] materials;
 
-        public Rect_Tomograph(int n_lasers, int n_squares, double[] x1, double[] y1, double[] x2, double[] y2, double[] materials)
+        public Rect_Tomograph(int n_lasers, double[] x1, double[] y1, double[] x2, double[] y2, double[] materials)
         {
             this.n_lasers = n_lasers;
-            this.n_squares = n_squares;
+            this.n_rectangles = x1.Length;
             this.x1 = x1;
             this.y1 = y1;
             this.x2 = x2;
@@ -47,7 +47,7 @@ namespace tomograf
                 }
             }
 
-            for (int k = 0; k < n_squares; k++)
+            for (int k = 0; k < n_rectangles; k++)
             {
                // Console.WriteLine('\n');
                 //Console.WriteLine("Kwadrat: " + k);
@@ -203,8 +203,8 @@ namespace tomograf
             using (StreamWriter writer = new StreamWriter(filename))
             {
                 writer.WriteLine("Ilość laserów: " + n_lasers);
-                writer.WriteLine("Ilość prostokątów: " + n_squares);
-                for(int i=0; i<n_squares; i++) 
+                writer.WriteLine("Ilość prostokątów: " + n_rectangles);
+                for(int i=0; i<n_rectangles; i++) 
                 {
                     writer.WriteLine("Prostokąt numer "+(i+1)+": ");
                     writer.Write("(" + x1[i] + ", " + y1[i] + ") - ");
