@@ -56,13 +56,13 @@ namespace tomograf
                     }
                 }
             }
-
+            save_to_txt(vector);
             return vector;
         }
 
         public void save_to_txt(double[][] results)
         {
-            string filename = "results.txt";
+            string filename = "circle_results.txt";
             using (StreamWriter writer = new StreamWriter(filename))
             {
                 writer.WriteLine("Ilość laserów: " + n_lasers);
