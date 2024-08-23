@@ -1,4 +1,4 @@
-namespace tomograf
+namespace tomograf.tomografy
 {
     class Point
     {

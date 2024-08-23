@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 //na ten moment program nie będzie działał dla jednego lasera (dojdzie do dzielenia przez 0), na dniach dorobię obsługe jednego lasera
 
 
-namespace tomograf
+namespace tomograf.tomografy
 {
-    class Rect_Tomograph: ITomograph
+    class Rect_Tomograph : ITomograph
     {
         private int n_lasers;
         private int n_rectangles;
@@ -22,7 +22,7 @@ namespace tomograf
         public Rect_Tomograph(int n_lasers, double[] x1, double[] y1, double[] x2, double[] y2, double[] materials)
         {
             this.n_lasers = n_lasers;
-            this.n_rectangles = x1.Length;
+            n_rectangles = x1.Length;
             this.x1 = x1;
             this.y1 = y1;
             this.x2 = x2;
@@ -49,14 +49,30 @@ namespace tomograf
 
             for (int k = 0; k < n_rectangles; k++)
             {
-               // Console.WriteLine('\n');
+                //dodalem ta linijke zeby sie upewnic zawsze ze (x1, y1) to lewy dolny, a (x2, y2) to prawy gorny
+
+                if (x1[k] > x2[k])
+                {
+                    double temp = x2[k];
+                    x2[k] = x1[k];
+                    x1[k] = temp;
+                }
+
+                if (y1[k] > y2[k])
+                {
+                    double temp = y2[k];
+                    y2[k] = y1[k];
+                    y1[k] = temp;
+                }
+
+                // Console.WriteLine('\n');
                 //Console.WriteLine("Kwadrat: " + k);
                 for (int i = 0; i < n_lasers; i++)
                 {
                     for (int j = 0; j < n_lasers; j++)
                     {
 
-                        double a = ((1 - j * (2.0 / (n_lasers-1))) - (1 - i * (2.0 / (n_lasers - 1)))) / 2;
+                        double a = (1 - j * (2.0 / (n_lasers - 1)) - (1 - i * (2.0 / (n_lasers - 1)))) / 2;
                         double b = calc_b(a, 1, 1 - j * (2.0 / (n_lasers - 1)));
 
                         //Console.WriteLine((i + 1) + "->" + (j + 1));
@@ -64,7 +80,7 @@ namespace tomograf
 
                         if (i == j)
                         {
-                            if (y2[k] >= (1 - j * (2.0 / (n_lasers - 1))) && (1 - j * (2.0 / (n_lasers - 1))) >= y1[k])
+                            if (y2[k] >= 1 - j * (2.0 / (n_lasers - 1)) && 1 - j * (2.0 / (n_lasers - 1)) >= y1[k])
                             {
                                 //Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + (x2[k] - x1[k]) + " strata energii: " + materials[k] * (x2[k] - x1[k]));
                                 energy_loss[j][i] += materials[k] * (x2[k] - x1[k]);
@@ -118,7 +134,7 @@ namespace tomograf
                                     }
                                 }
 
-                                double distance = Math.Sqrt(Math.Pow((exit_x - entry_x), 2) + Math.Pow((exit_y - entry_y), 2));
+                                double distance = Math.Sqrt(Math.Pow(exit_x - entry_x, 2) + Math.Pow(exit_y - entry_y, 2));
                                 //Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + distance + " strata energii: " + materials[k] * (distance));
                                 energy_loss[j][i] += materials[k] * distance;
                             }
@@ -138,7 +154,7 @@ namespace tomograf
                                 //if (i == 3 && j == 0)
                                 //{
 
-                                    //Console.WriteLine(entry_x + ", " + entry_y);
+                                //Console.WriteLine(entry_x + ", " + entry_y);
                                 //}
                             }
 
@@ -179,20 +195,20 @@ namespace tomograf
                                         //if (i == 3 && j == 0)
                                         //{
 
-                                            //Console.WriteLine(exit_x + ", " + exit_y);
+                                        //Console.WriteLine(exit_x + ", " + exit_y);
                                         //}
                                     }
                                 }
-                                double distance = Math.Sqrt(Math.Pow((exit_x - entry_x), 2) + Math.Pow((exit_y - entry_y), 2));
+                                double distance = Math.Sqrt(Math.Pow(exit_x - entry_x, 2) + Math.Pow(exit_y - entry_y, 2));
                                 //Console.WriteLine("wejscie: " + i + " wyjscie: " + j + " dlugosc promienia: " + distance + " strata energii: " + materials[k] * (distance));
                                 energy_loss[j][i] += materials[k] * distance;
 
                             }
 
                         }
-                        }
                     }
                 }
+            }
             save_to_txt(energy_loss);
             return energy_loss;
         }
@@ -204,16 +220,16 @@ namespace tomograf
             {
                 writer.WriteLine("Ilość laserów: " + n_lasers);
                 writer.WriteLine("Ilość prostokątów: " + n_rectangles);
-                for(int i=0; i<n_rectangles; i++) 
+                for (int i = 0; i < n_rectangles; i++)
                 {
-                    writer.WriteLine("Prostokąt numer "+(i+1)+": ");
+                    writer.WriteLine("Prostokąt numer " + (i + 1) + ": ");
                     writer.Write("(" + x1[i] + ", " + y1[i] + ") - ");
                     writer.Write("(" + x2[i] + ", " + y2[i] + ") ");
                     writer.Write("materiał: " + materials[i] + '\n');
                 }
                 writer.WriteLine("Straty energii:");
                 foreach (double[] line in results)
-                    {
+                {
                     foreach (double y in line)
                     {
                         writer.Write(y + " ");
@@ -222,7 +238,7 @@ namespace tomograf
                 }
                 writer.Close();
             }
-            Console.WriteLine("Wyniki zapisano do: " + filename);
+            //Console.WriteLine("Wyniki zapisano do: " + filename);
         }
     }
 }

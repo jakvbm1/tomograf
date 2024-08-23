@@ -17,9 +17,9 @@ using System.Threading.Tasks;
 // 9. Dodajemy wartości dla wszystkich wielokątów
 // W kroku 2 i 3 trzeba pamiętać o przypadku kiedy krawędź jest pionowa
 
-namespace tomograf
+namespace tomograf.tomografy
 {
-    class Polygon_Tomograph: ITomograph
+    class Polygon_Tomograph : ITomograph
     {
         private int n_lasers;
         private Point[][] polygons;
@@ -66,7 +66,7 @@ namespace tomograf
         private double all_polygons_energy_loss(Point[][] polygons, double[] materials, double laser_a, double laser_b)
         {
             double energy_loss = 0;
-            for(int i = 0; i < polygons.Length; i++)
+            for (int i = 0; i < polygons.Length; i++)
             {
                 energy_loss += polygon_energy_loss(polygons[i], materials[i], laser_a, laser_b);
             }
@@ -181,7 +181,7 @@ namespace tomograf
                 writer.WriteLine("Ilość laserów: " + n_lasers);
                 writer.WriteLine("Ilość wielokątów: " + polygons.Length);
 
-                for (int i = 0; i < polygons.Length; i++) 
+                for (int i = 0; i < polygons.Length; i++)
                 {
                     writer.WriteLine("Wielokąt numer " + (i + 1) + ": ");
 
@@ -189,7 +189,7 @@ namespace tomograf
                     {
                         writer.Write($"({polygon.x}, {polygon.y}), ");
                     }
-                    
+
                     writer.Write("materiał: " + materials[i] + '\n');
                 }
 
