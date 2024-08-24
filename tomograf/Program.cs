@@ -36,6 +36,36 @@ namespace tomograf
             Console.WriteLine(tuna.Solve());
         }
 
+        private static void threeRectTest()
+        {
+            double[] x1 = { -0.6, -0.6 , 0.1};
+            double[] y1 = { 0.9, -0.4, -0.4 };
+            double[] x2 = { 0.6, -0.1, 0.6 };
+            double[] y2 = { 0.7, 0.2, 0.2};
+            double[] material = { 1.7, 0.8, 1.4 };
+            var referenceRect = new Rect_Tomograph(5, x1, y1, x2, y2, material);
+
+            double[][] results = referenceRect.Run();
+
+            foreach (double[] xx in results)
+            {
+                foreach (double yy in xx)
+                {
+                    Console.Write(yy + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+
+            double[] lower_boundaries = { -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5 };
+            double[] higher_boundaries = { 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2 };
+            TestFunction funkcja = new TestFunction(5, results);
+
+            TSO tuna = new TSO(100, 50, 15, funkcja.deploy_rect, higher_boundaries, lower_boundaries);
+            Console.WriteLine(tuna.Solve());
+        }
+
 
         private static void Main(string[] args)
         {
@@ -99,7 +129,8 @@ namespace tomograf
             //    Console.WriteLine();
             //}
 
-            oneRectTest();
+            //oneRectTest();
+            threeRectTest();
         }
     }
 }

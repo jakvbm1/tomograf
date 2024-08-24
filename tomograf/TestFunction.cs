@@ -39,6 +39,25 @@ namespace tomograf
             var rect_tom = new Rect_Tomograph(n_lasers, x1, y1, x2, y2, m);
             return deploy(rect_tom.Run());
         }
+
+        public double deploy_circle(params double[] args) 
+        {
+            double[] x = new double[args.Length / 4];
+            double[] y = new double[args.Length / 4];
+            double[] r = new double[args.Length / 4];
+            double[] m = new double[args.Length/4];
+
+            for (int i = 0; i < args.Length / 4; i++)
+            {
+                x[i] = args[4 * i];
+                y[i] = args[4 * i + 1];
+                r[i] = args[4 * i + 2];
+                m[i] = args[4 * i + 3];
+            }
+
+            var circle_tom = new Circle_tomograph(x, y, r, n_lasers, m);
+            return deploy(circle_tom.Run());
+        }
         double deploy(double[][] args)
         {
             double val = 0;
