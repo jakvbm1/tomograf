@@ -33,7 +33,9 @@ namespace tomograf
             TestFunction funkcja = new TestFunction(5, results);
 
             TSO tuna = new TSO(100, 50, 5, funkcja.deploy_rect,higher_boundaries, lower_boundaries);
-            Console.WriteLine(tuna.Solve());
+            GTOA gtoa = new GTOA(funkcja.deploy_rect, lower_boundaries, higher_boundaries, 5, 20, 75);
+            gtoa.Solve();
+            //Console.WriteLine(tuna.Solve());
         }
 
         private static void threeRectTest()
@@ -129,8 +131,8 @@ namespace tomograf
             //    Console.WriteLine();
             //}
 
-            //oneRectTest();
-            threeRectTest();
+            oneRectTest();
+            //threeRectTest();
         }
     }
 }
