@@ -16,7 +16,7 @@ namespace tomograf.shapes
     class Polygon : IShape
     {
         private readonly IList<Point> vertices;
-        private double material;
+        private readonly double material;
 
         public Polygon(IList<Point> vertices, double material)
         {
@@ -30,14 +30,14 @@ namespace tomograf.shapes
             var intersectionPoints = new List<Point>();
             for (int i = 1; i < this.vertices.Count; i++)
             {
-                var p = getIntersectionPointOnEdge(this.vertices[i - 1], this.vertices[i], laserA, laserB);
+                var p = GetIntersectionPointOnEdge(this.vertices[i - 1], this.vertices[i], laserA, laserB);
                 if (p != null)
                 {
                     intersectionPoints.Add(p);
                 }
             }
 
-            var ip = getIntersectionPointOnEdge(this.vertices[^1], this.vertices[0], laserA, laserB);
+            var ip = GetIntersectionPointOnEdge(this.vertices[^1], this.vertices[0], laserA, laserB);
             if (ip != null)
             {
                 intersectionPoints.Add(ip);
@@ -49,7 +49,7 @@ namespace tomograf.shapes
                 var currVertex = this.vertices[i];
                 var prevVertex = this.vertices[(i - 1 + this.vertices.Count) % this.vertices.Count];
                 var nextVertex = this.vertices[(i + 1) % this.vertices.Count];
-                if (checkIntersectionWithVertex(currVertex, prevVertex, nextVertex, laserA, laserB))
+                if (CheckIntersectionWithVertex(currVertex, prevVertex, nextVertex, laserA, laserB))
                 {
                     intersectionPoints.Add(currVertex);
                 }
@@ -65,13 +65,13 @@ namespace tomograf.shapes
             double distanceInPolygon = 0;
             for (int i = 1; i < intersectionPoints.Count; i += 2)
             {
-                distanceInPolygon += calcDistance(intersectionPoints[i - 1], intersectionPoints[i]);
+                distanceInPolygon += CalcDistance(intersectionPoints[i - 1], intersectionPoints[i]);
             }
 
             return distanceInPolygon * material;
         }
 
-        private Point? getIntersectionPointOnEdge(Point p1, Point p2, double laserA, double laserB)
+        private static Point? GetIntersectionPointOnEdge(Point p1, Point p2, double laserA, double laserB)
         {
             if (p1.x == p2.x)
             {
@@ -84,8 +84,8 @@ namespace tomograf.shapes
                 return new Point { x = p1.x, y = Y };
             }
 
-            double edgeA = calcA(p1.x, p1.y, p2.x, p2.y);
-            double edgeB = calcB(edgeA, p1.x, p1.y);
+            double edgeA = CalcA(p1.x, p1.y, p2.x, p2.y);
+            double edgeB = CalcB(edgeA, p1.x, p1.y);
 
             if (edgeA == laserA)
             {
@@ -103,17 +103,17 @@ namespace tomograf.shapes
             return new Point { x = x, y = y };
         }
 
-        private static double calcA(double x1, double y1, double x2, double y2)
+        private static double CalcA(double x1, double y1, double x2, double y2)
         {
             return (y2 - y1) / (x2 - x1);
         }
 
-        private static double calcB(double a, double x, double y)
+        private static double CalcB(double a, double x, double y)
         {
             return y - a * x;
         }
 
-        private bool checkIntersectionWithVertex(Point currVertex, Point prevVertex, Point nextVertex, double laserA, double laserB)
+        private static bool CheckIntersectionWithVertex(Point currVertex, Point prevVertex, Point nextVertex, double laserA, double laserB)
         {
             if (laserA * currVertex.x + laserB != currVertex.y)
             {
@@ -127,7 +127,7 @@ namespace tomograf.shapes
             return p1 * p2 < 0;
         }
 
-        private double calcDistance(Point p1, Point p2)
+        private static double CalcDistance(Point p1, Point p2)
         {
             double xDiff = p1.x - p2.x;
             double yDiff = p1.y - p2.y;
