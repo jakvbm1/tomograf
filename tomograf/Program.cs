@@ -50,6 +50,20 @@ namespace tomograf
             Console.WriteLine();
 
 
+            Rectangle rect = new Rectangle(x1[0], y1[0], x2[0], y2[0], material[0]);
+            IShape[] rectShapes = { rect };
+            double[][] rectShapesResults = Tomograph.Run(rectShapes, 5);
+            foreach (double[] xx in rectShapesResults)
+            {
+                foreach (double yy in xx)
+                {
+                    Console.Write(yy + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+
             Point[] rectangle = {
                 new() { x = -0.4, y = -0.6 },
                 new() { x = 0.6, y = -0.6 },
@@ -69,10 +83,11 @@ namespace tomograf
             }
             Console.WriteLine();
 
-            Polygon rct = new(rectangle, material[0]);
-            IShape[] rctShape = { rct };
-            var rctShapeResult = Tomograph.Run(rctShape, 5);
-            foreach (var i in rctShapeResult)
+
+            Polygon polyRct = new(rectangle, material[0]);
+            IShape[] polyRctShape = { polyRct };
+            var polyRctShapeResult = Tomograph.Run(polyRctShape, 5);
+            foreach (var i in polyRctShapeResult)
             {
                 foreach (var j in i)
                 {
