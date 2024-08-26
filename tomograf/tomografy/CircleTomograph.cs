@@ -85,7 +85,7 @@ namespace tomograf.tomografy
                 }
                 writer.Close();
             }
-            Console.WriteLine("Wyniki zapisano do: " + filename);
+            //Console.WriteLine("Wyniki zapisano do: " + filename);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace tomograf
             TestFunction funkcja = new TestFunction(5, results);
 
             TSO tuna = new TSO(100, 50, 5, funkcja.deploy_rect,higher_boundaries, lower_boundaries);
-            GTOA gtoa = new GTOA(funkcja.deploy_rect, lower_boundaries, higher_boundaries, 5, 20, 75);
+            GTOA gtoa = new GTOA(funkcja.deploy_rect, lower_boundaries, higher_boundaries, 5, 20, 50);
             gtoa.Solve();
             //Console.WriteLine(tuna.Solve());
         }
@@ -41,9 +41,9 @@ namespace tomograf
         private static void threeRectTest()
         {
             double[] x1 = { -0.6, -0.6 , 0.1};
-            double[] y1 = { 0.9, -0.4, -0.4 };
+            double[] y1 = { 0.7, -0.4, -0.4 };
             double[] x2 = { 0.6, -0.1, 0.6 };
-            double[] y2 = { 0.7, 0.2, 0.2};
+            double[] y2 = { 0.9, 0.2, 0.2};
             double[] material = { 1.7, 0.8, 1.4 };
             var referenceRect = new Rect_Tomograph(5, x1, y1, x2, y2, material);
 
@@ -64,8 +64,77 @@ namespace tomograf
             double[] higher_boundaries = { 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2 };
             TestFunction funkcja = new TestFunction(5, results);
 
-            TSO tuna = new TSO(100, 50, 15, funkcja.deploy_rect, higher_boundaries, lower_boundaries);
-            Console.WriteLine(tuna.Solve());
+            // TSO tuna = new TSO(100, 50, 15, funkcja.deploy_rect, higher_boundaries, lower_boundaries);
+            //Console.WriteLine(tuna.Solve());
+            GTOA gtoa = new GTOA(funkcja.deploy_rect, lower_boundaries, higher_boundaries, 15, 20, 50);
+            ABCAlgorithm abc = new ABCAlgorithm(6, 6, funkcja.deploy_rect, lower_boundaries, higher_boundaries);
+            abc.Solve();
+            Console.WriteLine("done");
+            //gtoa.Solve();
+        }
+
+        private static void oneCircleTest()
+        {
+            double[] x = { 0 };
+            double[] y = { 0};
+            double[] r = { 0.6 };
+
+            double[] material = { 1.2 };
+            var referenceCircle = new Circle_tomograph(x, y, r, 5 , material);
+
+            double[][] results = referenceCircle.Run();
+
+            foreach (double[] xx in results)
+            {
+                foreach (double yy in xx)
+                {
+                    Console.Write(yy + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+
+            double[] lower_boundaries = { -1, -1, -1, 0.5 };
+            double[] higher_boundaries = { 1, 1, 1, 2 };
+            TestFunction funkcja = new TestFunction(5, results);
+
+            TSO tuna = new TSO(100, 50, 4, funkcja.deploy_circle, higher_boundaries, lower_boundaries);
+            GTOA gtoa = new GTOA(funkcja.deploy_circle, lower_boundaries, higher_boundaries, 4, 20, 50);
+            gtoa.Solve();
+            //Console.WriteLine(tuna.Solve());
+        }
+
+        private static void threeCircleTest()
+        {
+            double[] x = { 0, -0.6, 0.7 };
+            double[] y = { 0, -0.6, 0.7 };
+            double[] r = { 0.25, 0.3, 0.1 };
+
+            double[] material = { 1.5, 0.6, 0.95 };
+            var referenceCircle = new Circle_tomograph(x, y, r, 5, material);
+
+            double[][] results = referenceCircle.Run();
+
+            foreach (double[] xx in results)
+            {
+                foreach (double yy in xx)
+                {
+                    Console.Write(yy + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+
+            double[] lower_boundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
+            double[] higher_boundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
+            TestFunction funkcja = new TestFunction(5, results);
+
+            TSO tuna = new TSO(100, 50, 4, funkcja.deploy_circle, higher_boundaries, lower_boundaries);
+            GTOA gtoa = new GTOA(funkcja.deploy_circle, lower_boundaries, higher_boundaries, 12, 20, 50);
+            gtoa.Solve();
+            //Console.WriteLine(tuna.Solve());
         }
 
 
@@ -131,8 +200,10 @@ namespace tomograf
             //    Console.WriteLine();
             //}
 
-            oneRectTest();
-            //threeRectTest();
+            //oneRectTest();
+            threeRectTest();
+            //oneCircleTest();
+            //threeCircleTest();
         }
     }
 }
