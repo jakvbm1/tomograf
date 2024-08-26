@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace tomograf.shapes
+﻿namespace tomograf.shapes
 {
     internal class Circle : IShape
     {
-        private double x, y, radius, material;
+        private readonly double x, y, radius, material;
 
         public Circle(double x, double y, double radius, double material)
         {
@@ -18,9 +12,9 @@ namespace tomograf.shapes
             this.material = material;
         }
 
-        public double CalcEnergyLoss(double laser_a, double laser_b)
+        public double CalcEnergyLoss(double laserA, double laserB)
         {
-            double d = Math.Abs(laser_a * x - y + laser_b) / Math.Sqrt(laser_a * laser_a + 1);
+            double d = Math.Abs(laserA * x - y + laserB) / Math.Sqrt(laserA * laserA + 1);
 
             // jesli odleglosc jest mniejsza niz promien, to promien przecina kolo
             if (d < radius) 

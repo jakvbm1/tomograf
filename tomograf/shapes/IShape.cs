@@ -1,10 +1,8 @@
-using System;
-
 namespace tomograf.shapes
 {
     public interface IShape
     {
-        double CalcEnergyLoss(double laser_a, double laser_b);
+        double CalcEnergyLoss(double laserA, double laserB);
         string ShapeDescription();
     }
 }
