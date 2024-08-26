@@ -16,28 +16,42 @@ namespace tomograf
             //double[] material = {3, 2, 1};
             //Tomograf tomograf = new Tomograf(5, 3, x1, y1, x2, y2, material);
 
-            //double[] x = { 0.1 };
-            //double[] y = { -0.1 };
-            //double[] r = { 0.5 };
-            //Circle_tomograph ct = new Circle_tomograph(x, y, r, 5, material);
-            //double[][] circle_res = ct.Run();
-            //foreach(var i  in circle_res)
-            //{
-            //    foreach(var j in i)
-            //    {
-            //        Console.Write(j + " ");
-            //    }
-            //    Console.WriteLine();
-            //}
-            //Console.WriteLine();
+            double[] x = { 0.1 };
+            double[] y = { -0.1 };
+            double[] r = { 0.5 };
+            double[] material = { 1 };
+            Circle_tomograph ct = new(x, y, r, 5, material);
+            double[][] circle_res = ct.Run();
+            foreach(var i  in circle_res)
+            {
+               foreach(var j in i)
+               {
+                   Console.Write(j + " ");
+               }
+               Console.WriteLine();
+            }
+            Console.WriteLine();
+
+
+            Circle circle = new(x[0], y[0], r[0], material[0]);
+            IShape[] circleShapes = { circle };
+            double[][] circleShapesResults = Tomograph.Run(circleShapes, 5);
+            foreach (var i  in circleShapesResults)
+            {
+               foreach(var j in i)
+               {
+                   Console.Write(j + " ");
+               }
+               Console.WriteLine();
+            }
+            Console.WriteLine();
 
 
             double[] x1 = { -0.4 };
             double[] y1 = { -0.6 };
             double[] x2 = { 0.6 };
             double[] y2 = { 0.4 };
-            double[] material = { 1 };
-            Rect_Tomograph tomograf = new Rect_Tomograph(5, x1, y1, x2, y2, material);
+            Rect_Tomograph tomograf = new(5, x1, y1, x2, y2, material);
             double[][] wyniki = tomograf.Run();
             foreach (double[] xx in wyniki)
             {
@@ -50,7 +64,7 @@ namespace tomograf
             Console.WriteLine();
 
 
-            Rectangle rect = new Rectangle(x1[0], y1[0], x2[0], y2[0], material[0]);
+            Rectangle rect = new(x1[0], y1[0], x2[0], y2[0], material[0]);
             IShape[] rectShapes = { rect };
             double[][] rectShapesResults = Tomograph.Run(rectShapes, 5);
             foreach (double[] xx in rectShapesResults)
@@ -71,7 +85,7 @@ namespace tomograf
                 new() { x = -0.4, y = 0.4 },
             };
             Point[][] polygons = { rectangle };
-            Polygon_Tomograph pt = new (5, polygons, material);
+            Polygon_Tomograph pt = new(5, polygons, material);
             double[][] polygon_res = pt.Run();
             foreach (var i in polygon_res)
             {
