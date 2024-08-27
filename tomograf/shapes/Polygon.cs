@@ -9,8 +9,6 @@
 // 9. Dodajemy wartości dla wszystkich wielokątów
 // W kroku 2 i 3 trzeba pamiętać o przypadku kiedy krawędź jest pionowa
 
-using tomograf.tomografy;
-
 namespace tomograf.shapes
 {
     class Polygon : IShape

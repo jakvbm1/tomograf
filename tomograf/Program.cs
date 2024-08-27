@@ -1,6 +1,5 @@
 ﻿using tomograf.metaheurystyki;
 using tomograf.shapes;
-using tomograf.tomografy;
 
 namespace tomograf
 {
@@ -8,101 +7,7 @@ namespace tomograf
     {
         private static void Main(string[] args)
         {
-            double[] x = { 0.1 };
-            double[] y = { -0.1 };
-            double[] r = { 0.5 };
-            double[] material = { 1 };
-            Circle_tomograph ct = new(x, y, r, 5, material);
-            double[][] circle_res = ct.Run();
-            foreach(var i  in circle_res)
-            {
-               foreach(var j in i)
-               {
-                   Console.Write(j + " ");
-               }
-               Console.WriteLine();
-            }
-            Console.WriteLine();
-
-
-            Circle circle = new(x[0], y[0], r[0], material[0]);
-            IShape[] circleShapes = { circle };
-            double[][] circleShapesResults = Tomograph.Run(circleShapes, 5);
-            foreach (var i  in circleShapesResults)
-            {
-               foreach(var j in i)
-               {
-                   Console.Write(j + " ");
-               }
-               Console.WriteLine();
-            }
-            Console.WriteLine();
-
-
-            double[] x1 = { -0.4 };
-            double[] y1 = { -0.6 };
-            double[] x2 = { 0.6 };
-            double[] y2 = { 0.4 };
-            Rect_Tomograph tomograf = new(5, x1, y1, x2, y2, material);
-            double[][] wyniki = tomograf.Run();
-            foreach (double[] xx in wyniki)
-            {
-                foreach (double yy in xx)
-                {
-                    Console.Write(yy + " ");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-
-
-            Rectangle rect = new(x1[0], y1[0], x2[0], y2[0], material[0]);
-            IShape[] rectShapes = { rect };
-            double[][] rectShapesResults = Tomograph.Run(rectShapes, 5);
-            foreach (double[] xx in rectShapesResults)
-            {
-                foreach (double yy in xx)
-                {
-                    Console.Write(yy + " ");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-
-
-            Point[] rectangle = {
-                new() { x = -0.4, y = -0.6 },
-                new() { x = 0.6, y = -0.6 },
-                new() { x = 0.6, y = 0.4 },
-                new() { x = -0.4, y = 0.4 },
-            };
-            Point[][] polygons = { rectangle };
-            Polygon_Tomograph pt = new(5, polygons, material);
-            double[][] polygon_res = pt.Run();
-            foreach (var i in polygon_res)
-            {
-                foreach (var j in i)
-                {
-                    Console.Write(j + " ");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-
-
-            Polygon polyRct = new(rectangle, material[0]);
-            IShape[] polyRctShape = { polyRct };
-            var polyRctShapeResult = Tomograph.Run(polyRctShape, 5);
-            foreach (var i in polyRctShapeResult)
-            {
-                foreach (var j in i)
-                {
-                    Console.Write(j + " ");
-                }
-                Console.WriteLine();
-            }
-
-            //oneRectTest();
+            OneRectTest();
             //threeRectTest();
         }
 

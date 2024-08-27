@@ -13,6 +13,7 @@ namespace tomograf
         {
             double distanceBetweenLasers = 2.0 / (nLasers - 1);
             double[][] energyLoss = new double[nLasers][];
+
             for (int i = 0; i < nLasers; i++)
             {
                 double laserEndY = 1 - i * distanceBetweenLasers;
@@ -26,7 +27,6 @@ namespace tomograf
                 }
             }
 
-            SaveToTxt(energyLoss, shapes, nLasers);
             return energyLoss;
         }
 
@@ -52,7 +52,7 @@ namespace tomograf
             return energyLoss;
         }
 
-        private static void SaveToTxt(double[][] energyLoss, IList<IShape> shapes, int nLasers)
+        public static void SaveToTxt(double[][] energyLoss, IList<IShape> shapes, int nLasers)
         {
             string filename = "results.txt";
             using (StreamWriter writer = new(filename))
