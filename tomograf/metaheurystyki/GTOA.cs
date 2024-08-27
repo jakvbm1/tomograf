@@ -12,9 +12,8 @@ namespace tomograf.metaheurystyki
         #region Parametry algorytmu:
 
         // funkcja celu
-        public delegate double funkcjaCelu(params double[] arg);
-        private funkcjaCelu f;
-        public funkcjaCelu F
+        private Func<double[], double> f;
+        public Func<double[], double> F
         {
             set { f = value; }
         }
@@ -116,7 +115,7 @@ namespace tomograf.metaheurystyki
 
         #region Konstruktor
 
-        public GTOA(funkcjaCelu fCelu, double[] brzegDol, double[] brzegGora, int wymiarZadania, int liczbaOsobnikow, int liczbaIteracji)
+        public GTOA(Func<double[], double> fCelu, double[] brzegDol, double[] brzegGora, int wymiarZadania, int liczbaOsobnikow, int liczbaIteracji)
         {
             this.f = fCelu;
             this.brzegDol = brzegDol;

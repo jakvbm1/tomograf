@@ -36,9 +36,11 @@ namespace tomograf
             double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
 
             int nLasers = 5;
+            int iterations = 100;
+            int population = 50;
             int dimensions = lowerBoundaries.Length;
             double[][] results = Tomograph.Run(shapes, nLasers);
-            var testFunction = new TestFunction(nLasers, results);
+            Func<double[], double> testFunction = new TestFunction(nLasers, results).DeployCircle;
 
             foreach (double[] xx in results)
             {
@@ -50,9 +52,10 @@ namespace tomograf
             }
             Console.WriteLine();
 
-            //var algorithm = new TSO(100, 50, dimensions, testFunction.DeployRect, higherBoundaries, lowerBoundaries);
-            //var algorithm = new GTOA(testFunction.DeployRect, lowerBoundaries, higherBoundaries, dimensions, 20, 50);
-            var algorithm = new ABCAlgorithm(6, 6, testFunction.DeployRect, lowerBoundaries, higherBoundaries);
+            //var algorithm = new TSO(iterations, population, dimensions, testFunction, higherBoundaries, lowerBoundaries);
+            //var algorithm = new GTOA(testFunction, lowerBoundaries, higherBoundaries, dimensions, population, iterations);
+            var algorithm = new ABCAlgorithm(population, iterations, testFunction, lowerBoundaries, higherBoundaries);
+            //var algorithm = new JellyfishSearchOptimizer(testFunction, population, iterations, dimensions, higherBoundaries, lowerBoundaries);
 
             algorithm.Solve();
 

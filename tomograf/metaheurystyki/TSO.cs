@@ -35,10 +35,9 @@ namespace tomograf.metaheurystyki
 
         string file_name = "Tuna_swarm_optimization.txt";
 
-        public delegate double tested_function(params double[] arg);
-        private tested_function f;
+        private Func<double[], double> f;
 
-        public TSO(int number_of_iterations, int numb_of_population, int dimension, tested_function f, double[] tab_up, double[] tab_down, double const_z=0.05, double const_a=0.7)
+        public TSO(int number_of_iterations, int numb_of_population, int dimension, Func<double[], double> f, double[] tab_up, double[] tab_down, double const_z=0.05, double const_a=0.7)
         {
             this.number_of_iterations = number_of_iterations;
             this.numb_of_population = numb_of_population;

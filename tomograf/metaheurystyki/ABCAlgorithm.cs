@@ -16,8 +16,7 @@ namespace tomograf.metaheurystyki
         public delegate void Delegata(ABCAlgorithm o);
         public event Delegata PrintResults;
 
-        public delegate double DelFunction(params double[] x);
-        DelFunction f;
+        Func<double[], double> f;
 
         public static void kom()
         {
@@ -40,7 +39,7 @@ namespace tomograf.metaheurystyki
 
 
 
-        public ABCAlgorithm(int SN, int MCN, DelFunction f, double[] a, double[] b)
+        public ABCAlgorithm(int SN, int MCN, Func<double[], double> f, double[] a, double[] b)
         {
             this.SN = SN;
             this.MCN = MCN;
