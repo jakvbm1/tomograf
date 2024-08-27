@@ -68,12 +68,12 @@ namespace tomograf.metaheurystyki
         private int liczbaIteracji;
 
         // najlepszy znaleziony wynik
-        public double[] xBest
+        public double[] XBest
         {
             get; private set;
         }
 
-        public double yBest
+        public double FBest
         {
             get; private set;
         }
@@ -137,7 +137,7 @@ namespace tomograf.metaheurystyki
             this.wartosciFunkcjiCeluTeaching = new double[liczbaOsobnikow];
             this.wartosciFunkcjiCeluStudent = new double[liczbaOsobnikow];
             this.licznikFunkcjiCelu = 0;
-            this.xBest = new double[wymiarZadania];
+            this.XBest = new double[wymiarZadania];
             this.xSecondBest = new double[wymiarZadania];
             this.xThirdBest = new double[wymiarZadania];
             this.teacherAllocation = new double[wymiarZadania];
@@ -207,8 +207,8 @@ namespace tomograf.metaheurystyki
             }
 
             for (int k = 0; k < wymiarZadania; k++)
-                xBest[k] = populacja[indeks][k];
-            yBest = wartosc;
+                XBest[k] = populacja[indeks][k];
+            FBest = wartosc;
         }
 
         // Zapis stanu populacji
@@ -271,21 +271,21 @@ namespace tomograf.metaheurystyki
                 // zapisujemy te dane do xBest[], yBest, xSecondBest[], ySecondBest, xThirdBest[], yThirdBest
                 for (int k = 0; k < wymiarZadania; k++)
                 {
-                    xBest[k] = populacja[idxBest][k];
+                    XBest[k] = populacja[idxBest][k];
                     xSecondBest[k] = populacja[idxSecondBest][k];
                     xThirdBest[k] = populacja[idxThirdBest][k];
                 }
-                yBest = wartosciFunkcjiCelu[idxBest];
+                FBest = wartosciFunkcjiCelu[idxBest];
                 ySecondBest = wartosciFunkcjiCelu[idxSecondBest];
                 yThirdBest = wartosciFunkcjiCelu[idxThirdBest];
 
                 // ustalenie parametru teacherAllocation
                 for (int k = 0; k < wymiarZadania; k++)
-                    xMeanOfThreeBest[k] = (xBest[k] + xSecondBest[k] + xThirdBest[k]) / 3.0;
-                if(yBest <= f(xMeanOfThreeBest))
+                    xMeanOfThreeBest[k] = (XBest[k] + xSecondBest[k] + xThirdBest[k]) / 3.0;
+                if(FBest <= f(xMeanOfThreeBest))
                 {
                     for (int k = 0; k < wymiarZadania; k++)
-                        teacherAllocation[k] = xBest[k];
+                        teacherAllocation[k] = XBest[k];
                     licznikFunkcjiCelu++;
                 }
                 else
@@ -523,12 +523,6 @@ namespace tomograf.metaheurystyki
                     numerIteracji);
                 numerIteracji++;
             }
-
-            Console.Write($"xBest: ");
-            for (int k = 0; k < wymiarZadania; k++)
-                Console.Write($"{xBest[k]} ");
-            Console.Write($"fcelu: {yBest}");
-            Console.Write("\n");
         }
     }
 }
