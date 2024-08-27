@@ -273,8 +273,8 @@ namespace tomograf.metaheurystyki
         }
 
         public int NumberOfEvaluationFitnessFunction => number_of_calls;
-        double[] IOptimizationAlgorithm.XBest => best_arguments;
-        double IOptimizationAlgorithm.FBest => best_result;
+        public double[] XBest => best_arguments;
+        public double FBest => best_result;
         public void LoadFromFileStateOfAlghoritm()
         {
 
