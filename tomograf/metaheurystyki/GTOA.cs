@@ -141,7 +141,7 @@ namespace tomograf.metaheurystyki
             this.xSecondBest = new double[wymiarZadania];
             this.xThirdBest = new double[wymiarZadania];
             this.teacherAllocation = new double[wymiarZadania];
-            this.teachingFactor = 1.0;
+            this.teachingFactor = 1;
 
             generujPopulacjeStartowa();
         }
