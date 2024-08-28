@@ -27,20 +27,31 @@ namespace tomograf
             //double[] higherBoundaries = { 1, 1, 1, 2 };
 
             // Three circles test
-            IShape[] shapes = {
-                new Circle(x: 0, y: -0.6, radius: 0.7, material: 1.5),
-                new Circle(x: 0, y: -0.6, radius: 0.7, material: 0.6),
-                new Circle(x: 0.25, y: 0.3, radius: 0.1, material: 0.95),
+            //IShape[] shapes = {
+            //    new Circle(x: 0, y: -0.6, radius: 0.7, material: 1.5),
+            //    new Circle(x: 0, y: -0.6, radius: 0.7, material: 0.6),
+            //    new Circle(x: 0.25, y: 0.3, radius: 0.1, material: 0.95),
+            //};
+            //double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
+            //double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
+
+            // Polygon test
+            Point[] vertices = {
+                new() { x = -0.5, y = 0.5 },
+                new() { x = 0, y = 0.1 },
+                new() { x = -0.5, y = -0.5 },
+                new() { x = 1, y = 0 },
             };
-            double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
-            double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
+            IShape[] shapes = { new Polygon(vertices: vertices, material: 1) };
+            double[] lowerBoundaries = { -1, -1, -1, -1, -1, -1, -1, -1 };
+            double[] higherBoundaries = { 1, 1, 1, 1, 1, 1, 1, 1 };
 
             int nLasers = 5;
             int iterations = 100;
             int population = 50;
             int dimensions = lowerBoundaries.Length;
             double[][] results = Tomograph.Run(shapes, nLasers);
-            Func<double[], double> testFunction = new TestFunction(nLasers, results).DeployCircle;
+            Func<double[], double> testFunction = new TestFunction(nLasers, results).DeployPolygon(vertices.Length);
 
             foreach (double[] xx in results)
             {
@@ -54,8 +65,8 @@ namespace tomograf
 
             //var algorithm = new TSO(iterations, population, dimensions, testFunction, higherBoundaries, lowerBoundaries);
             //var algorithm = new GTOA(testFunction, lowerBoundaries, higherBoundaries, dimensions, population, iterations);
-            var algorithm = new ABCAlgorithm(population, iterations, testFunction, lowerBoundaries, higherBoundaries);
-            //var algorithm = new JellyfishSearchOptimizer(testFunction, population, iterations, dimensions, higherBoundaries, lowerBoundaries);
+            //var algorithm = new ABCAlgorithm(population, iterations, testFunction, lowerBoundaries, higherBoundaries);
+            var algorithm = new JellyfishSearchOptimizer(testFunction, population, iterations, dimensions, higherBoundaries, lowerBoundaries);
 
             algorithm.Solve();
 

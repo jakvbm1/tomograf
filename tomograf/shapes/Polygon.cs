@@ -13,6 +13,7 @@ namespace tomograf.shapes
 {
     class Polygon : IShape
     {
+        private const double ERROR_CORRECTION = 0.000000000000001;
         private readonly IList<Point> vertices;
         private readonly double material;
 
@@ -93,7 +94,7 @@ namespace tomograf.shapes
             double x = (laserB - edgeB) / (edgeA - laserA);
             double y = x * edgeA + edgeB;
 
-            if (x >= Math.Max(p1.x, p2.x) || x <= Math.Min(p1.x, p2.x))
+            if (x >= Math.Max(p1.x, p2.x) - ERROR_CORRECTION || x <= Math.Min(p1.x, p2.x) + ERROR_CORRECTION)
             {
                 return null;
             }
@@ -113,7 +114,8 @@ namespace tomograf.shapes
 
         private static bool CheckIntersectionWithVertex(Point currVertex, Point prevVertex, Point nextVertex, double laserA, double laserB)
         {
-            if (laserA * currVertex.x + laserB != currVertex.y)
+            double y = laserA * currVertex.x + laserB;
+            if (y > currVertex.y + ERROR_CORRECTION || y < currVertex.y - ERROR_CORRECTION)
             {
                 return false;
             }

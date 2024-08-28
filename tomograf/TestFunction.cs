@@ -46,6 +46,35 @@ namespace tomograf
 
             return Deploy(Tomograph.Run(shapes, nLasers));
         }
+
+        public Func<double[], double> DeployPolygon(int verticesNumber) 
+        {
+            int shapeParametersNumber = verticesNumber * 2 + 1;
+            return (double[] args) =>
+            {
+                var shapes = new IShape[args.Length / shapeParametersNumber];
+                for (int i = 0; i < shapes.Length; i++)
+                {
+                    int polygonOffset = i * shapeParametersNumber;
+                    var vertices = new Point[verticesNumber];
+                    for (int j = 0; j < verticesNumber; j++)
+                    {
+                        vertices[j] = new Point
+                        {
+                            x = args[polygonOffset + (j * 2)],
+                            y = args[polygonOffset + (j * 2) + 1]
+                        };
+                    }
+                    shapes[i] = new Polygon(
+                        vertices: vertices,
+                        material: args[polygonOffset + shapeParametersNumber - 1]
+                    );
+                }
+
+                return Deploy(Tomograph.Run(shapes, nLasers));
+            };
+        }
+
         private double Deploy(double[][] args)
         {
             double val = 0;
