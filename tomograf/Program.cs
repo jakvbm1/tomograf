@@ -1,10 +1,55 @@
-﻿using tomograf.metaheurystyki;
+﻿using tomograf.deterministyczne;
+using tomograf.metaheurystyki;
 using tomograf.shapes;
 
 namespace tomograf
 {
     internal class Program
     {
+        private static void deterministicThreeRectTest()
+        {
+            double[] initialValues = {-0.3910361767075816, 0.6631676426247867, 0.4973300497013236, 0.8632698887519723, 1.6990193239774767,
+ -0.606320580734362, -0.4720869725072207, -0.6447315165821815, 0.2027881948228539, 1.2959275104021961, 0.902156050267698, -0.4287120632640748
+-0.5216839745464533, 0.21428203016708175, 0.7372872055556781};
+
+            double[][] values = new double[initialValues.Length + 1][];
+            for (int i = 0; i < initialValues.Length + 1; i++)
+            {
+                values[i] = new double[initialValues.Length];
+            }
+
+
+            for (int i = 0; i < initialValues.Length; i++)
+            {
+                values[0][i] = initialValues[i];
+            }
+
+            for (int i = 0; i < initialValues.Length; i++)
+            {
+                for (int j = 0; j < initialValues.Length; j++)
+                {
+                    values[i + 1][j] = initialValues[j] * (i / initialValues.Length);
+                }
+            }
+
+            IShape[] shapes = {
+                new Rectangle(x1: -0.6, y1: 0.7, x2: 0.6, y2: 0.9, material: 1.7),
+                new Rectangle(x1: -0.6, y1: -0.4, x2: -0.1, y2: 0.2, material: 0.8),
+                new Rectangle(x1: 0.1, y1: -0.4, x2: 0.6, y2: 0.2, material: 1.4),
+            };
+
+            double[][] results = Tomograph.Run(shapes, 5);
+
+            double[] lower_boundaries = { -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5 };
+            double[] higher_boundaries = { 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2 };
+            TestFunction funkcja = new TestFunction(5, results);
+
+            Nelder_Mead nm = new Nelder_Mead(0.0001f, funkcja.DeployRect, values);
+            nm.run();
+
+
+        }
+
         private static void Main(string[] args)
         {
             // One rect test
@@ -79,6 +124,8 @@ namespace tomograf
             }
 
             Console.WriteLine();
+
+            deterministicThreeRectTest();
         }
     }
 }
