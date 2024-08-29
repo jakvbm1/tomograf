@@ -28,7 +28,18 @@ namespace tomograf
             {
                 for (int j = 0; j < initialValues.Length; j++)
                 {
-                    values[i + 1][j] = initialValues[j] * (i / initialValues.Length);
+                    if(i==j)
+                    {
+                        values[i + 1][j] = initialValues[j] + 0.14;
+                        if( j%5 == 0 )
+                        {
+                            values[i + 1][j] += 0.2;
+                        }
+                    }
+                    else
+                    { 
+                    values[i + 1][j] = initialValues[j];
+                    }
                 }
             }
 
@@ -44,7 +55,7 @@ namespace tomograf
             double[] higher_boundaries = { 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2 };
             TestFunction funkcja = new TestFunction(5, results);
 
-            Nelder_Mead nm = new Nelder_Mead(0.0001f, funkcja.DeployRect, values);
+            Nelder_Mead nm = new Nelder_Mead(0.0000001f, funkcja.DeployRect, values);
             nm.run();
 
 
