@@ -98,6 +98,7 @@ namespace tomograf
             double[][] results = Tomograph.Run(shapes, nLasers);
             Func<double[], double> testFunction = new TestFunction(nLasers, results).DeployPolygon(vertices.Length);
 
+            Console.WriteLine("Energy losses from tomograph:");
             foreach (double[] xx in results)
             {
                 foreach (double yy in xx)
@@ -109,12 +110,13 @@ namespace tomograf
             Console.WriteLine();
 
             //var algorithm = new TSO(iterations, population, dimensions, testFunction, higherBoundaries, lowerBoundaries);
-            //var algorithm = new GTOA(testFunction, lowerBoundaries, higherBoundaries, dimensions, population, iterations);
+            var algorithm = new GTOA(testFunction, lowerBoundaries, higherBoundaries, dimensions, population, iterations);
             //var algorithm = new ABCAlgorithm(population, iterations, testFunction, lowerBoundaries, higherBoundaries);
-            var algorithm = new JellyfishSearchOptimizer(testFunction, population, iterations, dimensions, higherBoundaries, lowerBoundaries);
+            //var algorithm = new JellyfishSearchOptimizer(testFunction, population, iterations, dimensions, higherBoundaries, lowerBoundaries);
 
             algorithm.Solve();
 
+            Console.WriteLine("Results of metaheuristic algorithm:");
             Console.WriteLine($"FBest: {algorithm.FBest}");
             Console.Write("XBest: ");
 
@@ -122,10 +124,24 @@ namespace tomograf
             {
                 Console.Write(x + " ");
             }
-
+            Console.WriteLine();
             Console.WriteLine();
 
-            deterministicThreeRectTest();
+            var deterministicAlgorithm = new HookeJeeves(algorithm.XBest, testFunction, initialStepSize: 0.2, stepReductionFactor: 0.5, precision: 0.0001);
+
+            deterministicAlgorithm.Run();
+
+            Console.WriteLine("Results of deterministic algorithm:");
+            Console.WriteLine($"FBest: {deterministicAlgorithm.FBest}");
+            Console.Write("XBest: ");
+
+            foreach (var x in deterministicAlgorithm.XBest)
+            {
+                Console.Write(x + " ");
+            }
+            Console.WriteLine();
+
+            //deterministicThreeRectTest();
         }
     }
 }
