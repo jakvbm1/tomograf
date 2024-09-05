@@ -15,8 +15,8 @@ namespace tomograf
             //double[] higherBoundaries = { 1, 1, 1, 1, 2 };
 
 
-            //double[] lowerBoundaries = { -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5 };
-            //double[] higherBoundaries = { 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2 };
+            double[] lowerBoundaries = { -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5 };
+            double[] higherBoundaries = { 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2 };
 
             // One circle test
             //double[] lowerBoundaries = { -1, -1, -1, 0.5 };
@@ -27,40 +27,40 @@ namespace tomograf
             //double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
 
             // Polygon test
-            Point[] vertices = {
-                new() { x = -0.5, y = 0.5 },
-                new() { x = 0, y = 0.1 },
-                new() { x = -0.5, y = -0.5 },
-                new() { x = 1, y = 0 },
-            };
-            IShape[] shapes = { new Polygon(vertices: vertices, material: 1) };
-            double[] lowerBoundaries = { -1, -1, -1, -1, -1, -1, -1, -1 };
-            double[] higherBoundaries = { 1, 1, 1, 1, 1, 1, 1, 1 };
+            //Point[] vertices = {
+            //    new() { x = -0.5, y = 0.5 },
+            //    new() { x = 0, y = 0.1 },
+            //    new() { x = -0.5, y = -0.5 },
+            //    new() { x = 1, y = 0 },
+            //};
+            //IShape[] shapes = { new Polygon(vertices: vertices, material: 1) };
+            //double[] lowerBoundaries = { -1, -1, -1, -1, -1, -1, -1, -1 };
+            //double[] higherBoundaries = { 1, 1, 1, 1, 1, 1, 1, 1 };
 
-            int nLasers = 5;
-            int iterations = 100;
-            int population = 50;
+            int nLasers = 40;
+            int iterations = 20;
+            int population = 20;
             int dimensions = lowerBoundaries.Length;
-            double[][] results = Tomograph.Run(shapes, nLasers);
-            Func<double[], double> testFunction = new TestFunction(nLasers, results).DeployPolygon(vertices.Length);
+            //double[][] results = Tomograph.Run(shapes, nLasers);
+            //Func<double[], double> testFunction = new TestFunction(nLasers, results).DeployPolygon(vertices.Length);
 
-            Console.WriteLine("Energy losses from tomograph:");
-            foreach (double[] xx in results)
-            {
-                foreach (double yy in xx)
-                {
-                    Console.Write(yy + " ");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-
+            //Console.WriteLine("Energy losses from tomograph:");
+            //foreach (double[] xx in results)
+            //{
+            //    foreach (double yy in xx)
+            //    {
+            //        Console.Write(yy + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
+            //Console.WriteLine();
+            var testFunction = new TestFunction(nLasers, Tests.referenceThreeRect(nLasers));
             //var algorithm = new TSO(iterations, population, dimensions, testFunction, higherBoundaries, lowerBoundaries);
-            var algorithm = new GTOA(testFunction, lowerBoundaries, higherBoundaries, dimensions, population, iterations);
-            //var algorithm = new ABCAlgorithm(population, iterations, testFunction, lowerBoundaries, higherBoundaries);
+            //var algorithm = new GTOA(testFunction, lowerBoundaries, higherBoundaries, dimensions, population, iterations);
+            var algorithm = new ABCAlgorithm(population, iterations, testFunction.DeployRect, lowerBoundaries, higherBoundaries);
             //var algorithm = new JellyfishSearchOptimizer(testFunction, population, iterations, dimensions, higherBoundaries, lowerBoundaries);
 
-            algorithm.Solve();
+            //algorithm.Solve();
 
             Console.WriteLine("Results of metaheuristic algorithm:");
             Console.WriteLine($"FBest: {algorithm.FBest}");
@@ -73,19 +73,21 @@ namespace tomograf
             Console.WriteLine();
             Console.WriteLine();
 
-            var deterministicAlgorithm = new HookeJeeves(algorithm.XBest, testFunction, initialStepSize: 0.2, stepReductionFactor: 0.5, precision: 0.0001);
+            Tests.threeRectRecreation(40);
 
-            deterministicAlgorithm.Run();
+            //var deterministicAlgorithm = new HookeJeeves(algorithm.XBest, testFunction, initialStepSize: 0.2, stepReductionFactor: 0.5, precision: 0.0001);
 
-            Console.WriteLine("Results of deterministic algorithm:");
-            Console.WriteLine($"FBest: {deterministicAlgorithm.FBest}");
-            Console.Write("XBest: ");
+            //deterministicAlgorithm.Run();
 
-            foreach (var x in deterministicAlgorithm.XBest)
-            {
-                Console.Write(x + " ");
-            }
-            Console.WriteLine();
+            //Console.WriteLine("Results of deterministic algorithm:");
+            //Console.WriteLine($"FBest: {deterministicAlgorithm.FBest}");
+            //Console.Write("XBest: ");
+
+            //foreach (var x in deterministicAlgorithm.XBest)
+            //{
+            //    Console.Write(x + " ");
+            //}
+            //Console.WriteLine();
 
             //deterministicThreeRectTest();
         }

@@ -13,7 +13,7 @@ namespace tomograf
 {
     static class Tests
     {
-        private static double[][] referencePoly(int nLasers)
+        public static double[][] referencePoly(int nLasers)
         {
             Point[] vertices =
             {
@@ -33,7 +33,7 @@ namespace tomograf
             return Tomograph.Run(shapes, nLasers);
         }
 
-        private static double[][] referenceThreeRect(int nLasers)
+        public static double[][] referenceThreeRect(int nLasers)
         {
             
             IShape[] shapes = {
@@ -45,19 +45,19 @@ namespace tomograf
 
         }
 
-        private static double[][] referenceOneRect(int nLasers) 
+        public static double[][] referenceOneRect(int nLasers) 
         {
             IShape[] shapes = { new Rectangle(x1: -0.8, y1: -0.6, x2: 0.6, y2: 0.4, material: 1) };
             return Tomograph.Run(shapes, nLasers);
         }
 
-        private static double[][] referenceOneCircle(int nLasers) 
+        public static double[][] referenceOneCircle(int nLasers) 
         {
             IShape[] shapes = { new Circle(x: 0, y: 0, radius: 1.2, material: 1.2) };
             return Tomograph.Run(shapes, nLasers);
         }
 
-        private static double[][] referenceThreeCircle(int nLasers)
+        public static double[][] referenceThreeCircle(int nLasers)
         {
             IShape[] shapes = {
                 new Circle(x: 0, y: -0.6, radius: 0.7, material: 1.5),
@@ -67,9 +67,54 @@ namespace tomograf
             return Tomograph.Run(shapes,nLasers);
         }
 
-        private static void polyRecreation()
+        public static void threeRectRecreation(int nLasers) 
         {
-            TestFunction tf = new TestFunction(20, referencePoly());
+            double[] initialValues = {-0.5966739044510116, 0.19676699642593085, 0.6441532843563083, - 0.3890690721586308, 0.8809504807118331,
+                - 0.31380620337418924, 0.6254295883092844, - 0.11678306315032078, 0.9332192566052868, 0.8960693524223609, - 0.6190457930208307,
+                0.6988870934201498, 0.661783290093477, 0.90655520763752, 1.4313323856696827};
+
+            TestFunction tf = new TestFunction(nLasers, referenceThreeRect(nLasers));
+            double[] lowerBoundaries = { -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5 };
+            double[] higherBoundaries = { 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2 };
+
+            double[][] values = new double[initialValues.Length + 1][];
+            for (int i = 0; i < initialValues.Length + 1; i++)
+            {
+                values[i] = new double[initialValues.Length];
+            }
+
+
+            for (int i = 0; i < initialValues.Length; i++)
+            {
+                values[0][i] = initialValues[i];
+            }
+
+            for (int i = 0; i < initialValues.Length; i++)
+            {
+                for (int j = 0; j < initialValues.Length; j++)
+                {
+                    if (i == j)
+                    {
+                        values[i + 1][j] = initialValues[j] - 0.15;
+                        if (j % 5 == 0)
+                        {
+                            values[i + 1][j] += 0.2;
+                        }
+                    }
+                    else
+                    {
+                        values[i + 1][j] = initialValues[j];
+                    }
+                }
+            }
+
+            var nm = new Nelder_Mead(0.00001f, tf.DeployRect, values);
+            nm.run();
+        }
+
+        public static void polyRecreation(int nLasers)
+        {
+            TestFunction tf = new TestFunction(nLasers, referencePoly(nLasers));
 
             double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
             double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
@@ -118,7 +163,7 @@ namespace tomograf
 
         }
 
-        private static void deterministicThreeRectTest()
+        public static void deterministicThreeRectTest()
         {
             double[] initialValues = {-0.3910361767075816, 0.6631676426247867, 0.4973300497013236, 0.8632698887519723, 1.6990193239774767,
  -0.606320580734362, -0.4720869725072207, -0.6447315165821815, 0.2027881948228539, 1.2959275104021961, 0.902156050267698, -0.4287120632640748
