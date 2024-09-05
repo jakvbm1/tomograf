@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using tomograf.deterministyczne;
 using tomograf.metaheurystyki;
 using tomograf.shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace tomograf
 {
     static class Tests
     {
-        private static double[][] referencePoly()
+        private static double[][] referencePoly(int nLasers)
         {
             Point[] vertices =
             {
@@ -28,7 +30,41 @@ namespace tomograf
             var refPoly = new Polygon(vertices, 1);
             List<IShape> shapes = new List<IShape>();
             shapes.Add(refPoly);
-            return Tomograph.Run(shapes, 20);
+            return Tomograph.Run(shapes, nLasers);
+        }
+
+        private static double[][] referenceThreeRect(int nLasers)
+        {
+            
+            IShape[] shapes = {
+                new Rectangle(x1: -0.6, y1: 0.7, x2: 0.6, y2: 0.9, material: 1.7),
+                new Rectangle(x1: -0.6, y1: -0.4, x2: -0.1, y2: 0.2, material: 0.8),
+                new Rectangle(x1: 0.1, y1: -0.4, x2: 0.6, y2: 0.2, material: 1.4),
+            };
+            return Tomograph.Run(shapes, nLasers);
+
+        }
+
+        private static double[][] referenceOneRect(int nLasers) 
+        {
+            IShape[] shapes = { new Rectangle(x1: -0.8, y1: -0.6, x2: 0.6, y2: 0.4, material: 1) };
+            return Tomograph.Run(shapes, nLasers);
+        }
+
+        private static double[][] referenceOneCircle(int nLasers) 
+        {
+            IShape[] shapes = { new Circle(x: 0, y: 0, radius: 1.2, material: 1.2) };
+            return Tomograph.Run(shapes, nLasers);
+        }
+
+        private static double[][] referenceThreeCircle(int nLasers)
+        {
+            IShape[] shapes = {
+                new Circle(x: 0, y: -0.6, radius: 0.7, material: 1.5),
+                new Circle(x: 0, y: -0.6, radius: 0.7, material: 0.6),
+                new Circle(x: 0.25, y: 0.3, radius: 0.1, material: 0.95),
+            };
+            return Tomograph.Run(shapes,nLasers);
         }
 
         private static void polyRecreation()
