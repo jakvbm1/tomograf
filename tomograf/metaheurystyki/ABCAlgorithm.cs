@@ -293,7 +293,7 @@ namespace tomograf.metaheurystyki
 
                 //PrintResults(this);
                 //zapiszDoPliku("WYN.txt");
-
+                Console.WriteLine(FBest);
             }
             zapiszDoPliku("ABCEND.txt");
         }

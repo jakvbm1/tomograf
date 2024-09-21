@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,6 +34,25 @@ namespace tomograf
             return Tomograph.Run(shapes, nLasers);
         }
 
+        public static double[][] referencePoly2(int nLasers) 
+        {
+            Point[] vertices =
+            {
+                new() {x=-0.8, y=0.5},
+                new() {x=0.5, y=0.6},
+                new() {x=0.6, y=0.5},
+                new() {x=0.6, y=0.4},
+                new() {x=0.5, y=0.3},
+                new() {x=0.1, y=-0.4},
+                new() {x =-0.4, y=-0.3},
+                new() {x=-0.8, y=0}
+            };
+            var refPoly = new Polygon(vertices, 1);
+            List<IShape> shapes = new List<IShape>();
+            shapes.Add(refPoly);
+            return Tomograph.Run(shapes, nLasers);
+        }
+
         public static double[][] referenceThreeRect(int nLasers)
         {
             
@@ -43,6 +63,16 @@ namespace tomograf
             };
             return Tomograph.Run(shapes, nLasers);
 
+        }
+
+        public static double[][] referenceVert3R(int nLasers)
+        {
+            IShape[] shapes = {
+                new Rectangle(x1: -0.6, y1: -0.6, x2: -0.2, y2: 0.25, material: 1.3),
+                new Rectangle(x1: 0, y1: -0.95, x2: 0.2, y2: 0.15, material: 0.8),
+                new Rectangle(x1: 0.4, y1: 0.4, x2: 0.7, y2: 0.8, material: 1.4),
+            };
+            return Tomograph.Run(shapes, nLasers);
         }
 
         public static double[][] referenceOneRect(int nLasers) 
@@ -69,11 +99,21 @@ namespace tomograf
 
         public static void threeRectRecreation(int nLasers) 
         {
-            double[] initialValues = {-0.5966739044510116, 0.19676699642593085, 0.6441532843563083, - 0.3890690721586308, 0.8809504807118331,
-                - 0.31380620337418924, 0.6254295883092844, - 0.11678306315032078, 0.9332192566052868, 0.8960693524223609, - 0.6190457930208307,
-                0.6988870934201498, 0.661783290093477, 0.90655520763752, 1.4313323856696827};
+            //double[] initialValues = {-0.5966739044510116, 0.19676699642593085, 0.6441532843563083, - 0.3890690721586308, 0.8809504807118331,
+            //    - 0.31380620337418924, 0.6254295883092844, - 0.11678306315032078, 0.9332192566052868, 0.8960693524223609, - 0.6190457930208307,
+            //    0.6988870934201498, 0.661783290093477, 0.90655520763752, 1.4313323856696827};
 
-            TestFunction tf = new TestFunction(nLasers, referenceThreeRect(nLasers));
+            //            double[] initialValues = {
+            //-0.5971109687365675, 0.8999723674167804, 0.599855649543582, 0.70014220387507, 1.7007496147120618,
+            //0.39131006659227685, -0.3869661903855316, 0.48476108220669994, -0.26462713833701923, 0.5454137880681823,
+            //-0.5764153393779837, 0.20089522309917093, 0.7402241760229957, -0.3995628518062178, 0.8344782618413868};
+
+            double[] initialValues = { 0.394956219525378, 0.39932327012785435, 0.7080254724251563, 0.7984965569890956, 1.3417956378428502,
+-0.17109617502875307, -0.6010789064762135, -0.6377789436803729, 0.24976340713632234, 1.1117431734056, -0.054777392793878305,
+0.14678073881961906, 0.2198470602103694, -0.9950345492404679, 0.5855602828929947};
+
+            //TestFunction tf = new TestFunction(nLasers, referenceThreeRect(nLasers));
+            TestFunction tf = new TestFunction(nLasers, referenceVert3R(nLasers));
             double[] lowerBoundaries = { -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5, -1, -1, -1, -1, 0.5 };
             double[] higherBoundaries = { 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2 };
 
@@ -114,54 +154,100 @@ namespace tomograf
 
         public static void polyRecreation(int nLasers)
         {
-            TestFunction tf = new TestFunction(nLasers, referencePoly(nLasers));
+            //TestFunction tf = new TestFunction(nLasers, referencePoly(nLasers));
+            TestFunction tf = new TestFunction(nLasers, referencePoly2(nLasers));
 
-            double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
-            double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
+            //double[] lowerBoundaries = { -1, -1, 0, 0.5};
+            //double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
+            //double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
+            //double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
+            double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
 
-            var algorithm = new ABCAlgorithm(20, 20, tf.DeployCircle, lowerBoundaries, higherBoundaries);
-            //algorithm.Solve();
+            //double[] higherBoundaries = { 1, 1, 1, 2};
+            //double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2 };
+            //double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
+            //double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
+            double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
 
-            double[] initialValues = {-0.7261476340134215, -0.35448694255683616, 0.1877357453911204, 0.5000002123423901, -0.33911094105443057,
-            0.22371888097544382, 0.5275789576916142, 0.6388409751418227, 0.05552402986250782, 0.10536946388707473, 0.1711823585754391, 0.7100358384019819};
 
-            double[][] values = new double[initialValues.Length + 1][];
-            for (int i = 0; i < initialValues.Length + 1; i++)
+            var algorithm = new ABCAlgorithm(10, 10, tf.DeployCircle, lowerBoundaries, higherBoundaries);
+            //var algorithm = new JellyfishSearchOptimizer(tf.DeployCircle, 4800, 30, lowerBoundaries.Length, higherBoundaries, lowerBoundaries);
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            algorithm.Solve();
+            Console.WriteLine();
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine("czas: " + elapsedMs.ToString());
+
+            Console.WriteLine($"FBest: {algorithm.FBest}");
+            Console.Write("XBest: ");
+
+            foreach (var x in algorithm.XBest)
             {
-                values[i] = new double[initialValues.Length];
+                Console.Write(x + " ");
+            }
+            Console.WriteLine();
+
+            double[][] values = new double[algorithm.XBest.Length + 1][];
+            for (int i = 0; i < algorithm.XBest.Length + 1; i++)
+            {
+                values[i] = new double[algorithm.XBest.Length];
             }
 
 
-            for (int i = 0; i < initialValues.Length; i++)
+            for (int i = 0; i < algorithm.XBest.Length; i++)
             {
-                values[0][i] = initialValues[i];
+                values[0][i] = algorithm.XBest[i];
             }
 
-            for (int i = 0; i < initialValues.Length; i++)
+            for (int i = 0; i < algorithm.XBest.Length; i++)
             {
-                for (int j = 0; j < initialValues.Length; j++)
+                for (int j = 0; j < algorithm.XBest.Length; j++)
                 {
                     if (i == j)
                     {
-                        values[i + 1][j] = initialValues[j] - 0.15;
+                        values[i + 1][j] = algorithm.XBest[j] + 0.1;
                         if (j % 5 == 0)
                         {
-                            values[i + 1][j] += 0.2;
+                            values[i + 1][j] += 0.1;
                         }
                     }
                     else
                     {
-                        values[i + 1][j] = initialValues[j];
+                        values[i + 1][j] = algorithm.XBest[j];
                     }
                 }
             }
-
-
+            Console.WriteLine();
+            Console.WriteLine("NELDER MEAD");
+            var watch2 = System.Diagnostics.Stopwatch.StartNew();
             Nelder_Mead nm = new Nelder_Mead(0.0000001f, tf.DeployCircle, values);
             nm.run();
+            watch2.Stop();
+            var elapsedMs2 = watch2.ElapsedMilliseconds;
+            Console.WriteLine("Czas dla Nelder-Meada " +elapsedMs2);
+            Console.WriteLine("Laczny czas obliczen " + (elapsedMs + elapsedMs2));
 
+            Console.WriteLine();
+            Console.WriteLine("HOOK JAVES");
+            var watch3 = System.Diagnostics.Stopwatch.StartNew();
+            var hj = new HookeJeeves(algorithm.XBest, tf.DeployCircle, 0.2, 0.5, 0.0000001);
+            hj.Run();
+            watch3.Stop();
+            Console.WriteLine("ilosc iteracji: " + hj.iterations);
+            Console.WriteLine("Ilosc wywolan funkcji celu " + hj.nCalls);
+            Console.WriteLine($"FBest: {hj.FBest}");
+            Console.Write("XBest: ");
 
+            foreach (var x in hj.XBest)
+            {
+                Console.Write(x + " ");
+            }
+            var elapsedMs3=watch3.ElapsedMilliseconds;
+            Console.WriteLine("Czas dla Hooka-Javesa " + elapsedMs3);
+            Console.WriteLine("Laczny czas obliczen " + (elapsedMs + elapsedMs3));
         }
+
 
         public static void deterministicThreeRectTest()
         {

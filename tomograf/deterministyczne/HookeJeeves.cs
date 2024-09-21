@@ -7,6 +7,9 @@
         private readonly double initialStepSize, stepReductionFactor, precision;
         public double[] XBest;
         public double FBest;
+        public int nCalls = 0, iterations = 0;
+
+
         public HookeJeeves(double[] startPoint, Func<double[], double> fitnessFunction, double initialStepSize, double stepReductionFactor, double precision)
         {
             this.startPoint = startPoint;
@@ -15,6 +18,8 @@
             this.stepReductionFactor = stepReductionFactor;
             this.precision = precision;
         }
+
+        private double call(double[] args) { nCalls++; return fitnessFunction(args); } 
         public double[] Run()
         {
             double stepSize = this.initialStepSize;
@@ -33,7 +38,7 @@
                     double t = x0[i];
 
                     x0[i] = t + stepSize;
-                    double q = fitnessFunction(x0);
+                    double q = call(x0);
                     if (q < q0)
                     {
                         q0 = q;
@@ -41,7 +46,7 @@
                     }
 
                     x0[i] = t - stepSize;
-                    q = fitnessFunction(x0);
+                    q = call(x0);
                     if (q < q0)
                     {
                         q0 = q;
@@ -62,7 +67,7 @@
 
                     xB0 = xB;
                     qB0 = q0;
-                    q0 = fitnessFunction(x0);
+                    q0 = call(x0);
                 }
                 else
                 {
@@ -70,6 +75,7 @@
                     q0 = qB0;
                     stepSize *= stepReductionFactor;
                 }
+                iterations++;
             }
 
             XBest = xB0;

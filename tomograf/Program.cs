@@ -37,9 +37,9 @@ namespace tomograf
             //double[] lowerBoundaries = { -1, -1, -1, -1, -1, -1, -1, -1 };
             //double[] higherBoundaries = { 1, 1, 1, 1, 1, 1, 1, 1 };
 
-            int nLasers = 40;
-            int iterations = 20;
-            int population = 20;
+            int nLasers = 50;
+            int iterations = 50;
+            int population = 50;
             int dimensions = lowerBoundaries.Length;
             //double[][] results = Tomograph.Run(shapes, nLasers);
             //Func<double[], double> testFunction = new TestFunction(nLasers, results).DeployPolygon(vertices.Length);
@@ -54,7 +54,7 @@ namespace tomograf
             //    Console.WriteLine();
             //}
             //Console.WriteLine();
-            var testFunction = new TestFunction(nLasers, Tests.referenceThreeRect(nLasers));
+            var testFunction = new TestFunction(nLasers, Tests.referenceVert3R(nLasers));
             //var algorithm = new TSO(iterations, population, dimensions, testFunction, higherBoundaries, lowerBoundaries);
             //var algorithm = new GTOA(testFunction, lowerBoundaries, higherBoundaries, dimensions, population, iterations);
             var algorithm = new ABCAlgorithm(population, iterations, testFunction.DeployRect, lowerBoundaries, higherBoundaries);
@@ -72,8 +72,8 @@ namespace tomograf
             }
             Console.WriteLine();
             Console.WriteLine();
-
-            Tests.threeRectRecreation(40);
+            Tests.polyRecreation(70);
+            //Tests.threeRectRecreation(50);
 
             //var deterministicAlgorithm = new HookeJeeves(algorithm.XBest, testFunction, initialStepSize: 0.2, stepReductionFactor: 0.5, precision: 0.0001);
 

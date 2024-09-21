@@ -314,6 +314,7 @@ namespace tomograf.metaheurystyki
                 this.Time += watch.ElapsedMilliseconds;
                 Array.Sort(jellies, (a, b) => a.fitness.CompareTo(b.fitness));
                 SaveToFileStateOfAlghoritm();
+                Console.WriteLine(FBest);
             }
 
             // Getting FBest in return statement requires calling FitnessFunction for each wolf
