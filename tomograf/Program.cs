@@ -72,7 +72,7 @@ namespace tomograf
             }
             Console.WriteLine();
             Console.WriteLine();
-            Tests.polyRecreation(70);
+            Tests.polyRecreation(100);
             //Tests.threeRectRecreation(50);
 
             //var deterministicAlgorithm = new HookeJeeves(algorithm.XBest, testFunction, initialStepSize: 0.2, stepReductionFactor: 0.5, precision: 0.0001);

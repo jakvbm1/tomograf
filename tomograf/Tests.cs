@@ -53,6 +53,37 @@ namespace tomograf
             return Tomograph.Run(shapes, nLasers);
         }
 
+
+        public static double[][] twoPolysSecondAttempt(int nLasers)
+        {
+            Point[] vertices1 =
+            {
+                new(){x=-0.7, y=-0.1},
+                new(){x=-0.6, y=-0.3},
+                new(){x=-0.5, y = -0.7},
+                new(){x=-0.7, y= - 0.9},
+                new(){x=-0.9, y = -0.6},
+                new(){x=-0.8, y =-0.3}
+            };
+
+            Point[] vertices2 =
+            {
+                new(){x=0, y = 0.3},
+                new(){x=0.2, y=0.7},
+                new(){x=0.7, y=0.65},
+                new(){y= 0.1, x = 0.5},
+                new(){y=0, x=0.5},
+                new(){y= -0.3, x=0.2}
+            };
+
+            var refPoly = new Polygon(vertices1, 1.3);
+            var refPoly2 = new Polygon(vertices2, 0.8);
+            List<IShape> shapes = new List<IShape>();
+            shapes.Add(refPoly);
+            shapes.Add(refPoly2);
+            return Tomograph.Run(shapes, nLasers);
+        }
+
         public static double[][] referenceThreeRect(int nLasers)
         {
             
@@ -155,19 +186,19 @@ namespace tomograf
         public static void polyRecreation(int nLasers)
         {
             //TestFunction tf = new TestFunction(nLasers, referencePoly(nLasers));
-            TestFunction tf = new TestFunction(nLasers, referencePoly2(nLasers));
+            TestFunction tf = new TestFunction(nLasers, twoPolysSecondAttempt(nLasers));
 
-            //double[] lowerBoundaries = { -1, -1, 0, 0.5};
+            double[] lowerBoundaries = { -1, -1, 0, 0.5};
             //double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
             //double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
             //double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
-            double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
+            //double[] lowerBoundaries = { -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5, -1, -1, 0, 0.5 };
 
-            //double[] higherBoundaries = { 1, 1, 1, 2};
+            double[] higherBoundaries = { 1, 1, 1, 2};
             //double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2 };
             //double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
             //double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
-            double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
+            //double[] higherBoundaries = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2 };
 
 
             var algorithm = new ABCAlgorithm(10, 10, tf.DeployCircle, lowerBoundaries, higherBoundaries);
