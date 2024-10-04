@@ -37,8 +37,8 @@ namespace tomograf
             for (int i = 0; i < args.Length / 4; i++)
             {
                 shapes[i] = new Circle(
-                    x: args[4 * i],
-                    y: args[4 * i + 1],
+                    x: circleBoundaryControl(args[4 * i], args[4 * i + 2]),
+                    y: circleBoundaryControl(args[4 * i + 1], args[4 * i + 2]),
                     radius: args[4 * i + 2],
                     material: args[4 * i + 3]
                 );
@@ -87,5 +87,23 @@ namespace tomograf
             }
             return val;
         }
+
+        private double circleBoundaryControl(double x, double radius)
+        {
+
+
+            if (x + radius >= 1)
+            {
+                return 0.99 - radius;
+            }
+
+            else if (x - radius <= -1)
+            {
+                return radius - 0.99;
+            }
+
+            else { return x; }
+        }
+
     }
 }

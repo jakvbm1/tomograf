@@ -53,7 +53,36 @@ namespace tomograf
             return Tomograph.Run(shapes, nLasers);
         }
 
+        public static double[][] referenceTwoPoly(int nLasers)
+        {
+            Point[] vertices1 =
+            {
+               new() {x = -0.6, y= 0.8},
+               new() { x = - 0.5, y = 0.4},
+               new() {x = -0.45, y = - 0.6},
+               new() {x= -0.6, y = -0.8},
+               new() {x=-0.8, y=-0.5},
+               new() {x=-0.7, y=0.4}
+           };
+            var poly1 = new Polygon(vertices1, 0.8);
 
+            Point[] vertices2 =
+            {
+               new(){x = 0.1, y=0.3},
+               new(){x = 0.5, y=0.2},
+               new(){x=0.4, y = 0},
+               new(){x = 0.3, y = -0.2},
+               new(){x=0.1, y=-0.5},
+               new(){x=-0.1, y=0}
+           };
+
+            var poly2 = new Polygon(vertices2, 1.3);
+
+            List<IShape> shapes = new List<IShape>();
+            shapes.Add(poly1);
+            shapes.Add(poly2);
+            return Tomograph.Run(shapes, nLasers);
+        }
         public static double[][] twoPolysSecondAttempt(int nLasers)
         {
             Point[] vertices1 =
